@@ -10,6 +10,7 @@ public class cat_movement : MonoBehaviour
     [SerializeField] private Transform trans;
     [SerializeField] private float rayLength;
     [SerializeField] private float jumpStrength;
+    [SerializeField] private float poundIntensity;
     private Vector3 movement;
     private bool grounded;
     private int jumpCount;
@@ -33,7 +34,7 @@ public class cat_movement : MonoBehaviour
     private LayerMask mask = LayerMask.GetMask("cat");
 
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "platform_tag") {
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
                 Debug.Log("cat grounded");
                 grounded = true;
@@ -46,7 +47,7 @@ public class cat_movement : MonoBehaviour
     }
 
     void OnCollisionExit(Collision col) {
-        if (col.gameObject.tag == "platform_tag") {
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)
             && !(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
                 grounded = false;
@@ -63,6 +64,10 @@ public class cat_movement : MonoBehaviour
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
+        }
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
+            grounded = false;
         }
 
         //horizontal movement
@@ -111,5 +116,14 @@ public class cat_movement : MonoBehaviour
 
         body.MovePosition(body.position + (movement * moveSpeed * Time.fixedDeltaTime));
 
+    }
+
+    public void Bomb(float intensity) {
+        if (grounded) {
+            grounded = false;
+            Vector3 vel = body.velocity;
+            vel.y = poundIntensity * intensity;
+            body.velocity = vel;
+        }
     }
 }

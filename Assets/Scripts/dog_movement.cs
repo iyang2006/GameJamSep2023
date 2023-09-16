@@ -19,6 +19,8 @@ public class dog_movement : MonoBehaviour
     [SerializeField] private float maxDelay;
     private float poundTime;
     private bool delayed;
+    [SerializeField] private float poundRad;
+
 
     // Start is called before the first frame update
     void Start()
@@ -32,9 +34,12 @@ public class dog_movement : MonoBehaviour
 
     private LayerMask mask = LayerMask.GetMask("dog");
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "platform_tag") {
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
                 Debug.Log("dog grounded");
+                if (inPound) {
+                    BombThem((Time.time - poundTime));
+                }
                 inPound = false;
                 poundTime = 0;
                 delayed = false;
@@ -44,7 +49,7 @@ public class dog_movement : MonoBehaviour
     }
 
     void OnCollisionExit(Collision col) {
-        if (col.gameObject.tag == "platform_tag") {
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)
             && !(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
                 grounded = false;
@@ -60,6 +65,15 @@ public class dog_movement : MonoBehaviour
         if ((Input.GetKey(KeyCode.S) == false) && inPound && (delayed == false) && (Time.time - poundTime >= poundDelay)) {
             delayed = true;
             windUp = false;
+        }
+
+        Vector3 tempV = body.velocity;
+        tempV.x = 0;
+        tempV.z = 0;
+        body.velocity = tempV;
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
+            grounded = false;
         }
 
         if (inPound) {
@@ -115,5 +129,17 @@ public class dog_movement : MonoBehaviour
         }
 
         body.MovePosition(body.position + (movement * speed * Time.fixedDeltaTime));
+    }
+
+    private void BombThem(float intensity) {
+        Collider[] colliders = Physics.OverlapSphere(trans.position, poundRad);
+        foreach (Collider c in colliders) {
+            if (c.gameObject.tag == "cat") {
+                c.GetComponent<cat_movement>().Bomb(intensity);
+            }
+            else if (c.gameObject.tag == "box") {
+                c.GetComponent<box_controller>().Bomb(intensity);
+            }
+        }
     }
 }
