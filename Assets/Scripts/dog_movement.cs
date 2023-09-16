@@ -7,7 +7,6 @@ public class dog_movement : MonoBehaviour
     
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
-    [SerializeField] private BoxCollider collid;
     [SerializeField] private float jumpStrength;
     [SerializeField] private float poundStrength;
     private Vector3 movement;
@@ -20,7 +19,7 @@ public class dog_movement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
+        if ((col.gameObject.tag == "floor_tag") || (col.gameObject.tag == "cat")) {
             grounded = true;
         }
     }
@@ -35,10 +34,10 @@ public class dog_movement : MonoBehaviour
     void Update()
     {   
         //horizontal movement
-        if (Input.GetKey(KeyCode.LeftArrow) == Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.A) == Input.GetKey(KeyCode.D)) {
             movement.x = 0;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow)) {
+        else if (Input.GetKey(KeyCode.A)) {
             movement.x = -1;
         }
         else {
@@ -46,15 +45,16 @@ public class dog_movement : MonoBehaviour
         }
 
         //jumping
-        if (Input.GetKey(KeyCode.UpArrow) && grounded == true) {
+        if (Input.GetKey(KeyCode.W) && grounded == true) {
             Debug.Log("Jump");
+            grounded = false;
             Vector3 vel = body.velocity;
             vel.y = 5 * jumpStrength;
             body.velocity = vel;
         }
 
         //ground pound
-        if (Input.GetKey(KeyCode.DownArrow) && grounded == false) {
+        if (Input.GetKey(KeyCode.S) && grounded == false) {
             Debug.Log("Pound");
             Vector3 vel = body.velocity;
             vel.y = -10 * poundStrength;
