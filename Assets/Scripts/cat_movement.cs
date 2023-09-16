@@ -62,9 +62,11 @@ public class cat_movement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.LeftArrow)) {
             movement.x = -1;
+            leftWall = true;
         }
         else {
             movement.x = 1;
+            leftWall = false;
         }
 
         //jumping
