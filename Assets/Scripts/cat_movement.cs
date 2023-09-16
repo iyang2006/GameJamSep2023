@@ -13,6 +13,10 @@ public class cat_movement : MonoBehaviour
     private bool grounded;
     private int jumpCount;
     private bool onWall;
+    private bool leftWall;
+    // private bool inJump;
+    // private float jumpTime;
+    // [SerializeField] private float jumpTimeLimit;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +24,9 @@ public class cat_movement : MonoBehaviour
         grounded = true;
         jumpCount = 0;
         onWall = false;
+        leftWall = true;
+        //inJump = false;
+        //jumpTime = 0;
     }
 
     void OnCollisionEnter(Collision col) {
@@ -44,6 +51,11 @@ public class cat_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        // if (Time.time - jumpTime >= jumpTimeLimit) {
+        //     jumpTime = 0;
+        //     inJump = false;
+        // }
+
         //horizontal movement
         if (Input.GetKey(KeyCode.LeftArrow) == Input.GetKey(KeyCode.RightArrow)) {
             movement.x = 0;
@@ -58,17 +70,27 @@ public class cat_movement : MonoBehaviour
         //jumping
         if (Input.GetKey(KeyCode.UpArrow)) {
             if (grounded == true) {
+                grounded = false;
                 Debug.Log("Jump");
                 Vector3 vel = body.velocity;
                 vel.y = 5 * jumpStrength;
                 body.velocity = vel;
             }
             else if (onWall == true && jumpCount < 3) {
+                // inJump = true;
+                // jumpTime = Time.time;
+                onWall = false;
                 Debug.Log("Wall jump");
                 jumpCount += 1;
                 Debug.Log(jumpCount);
                 Vector3 vel = body.velocity;
                 vel.y = 5 * jumpStrength;
+                if (leftWall == true) {
+                    vel.x = 2 * jumpStrength;
+                }
+                else {
+                    vel.x = -2 * jumpStrength;
+                }
                 body.velocity = vel;
             }
         }
