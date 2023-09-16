@@ -7,7 +7,6 @@ public class cat_movement : MonoBehaviour
     
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
-    [SerializeField] private BoxCollider collid;
     [SerializeField] private float jumpStrength;
     private Vector3 movement;
     private bool grounded;
@@ -30,7 +29,7 @@ public class cat_movement : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
+        if ((col.gameObject.tag == "floor_tag") || (col.gameObject.tag == "dog")) {
             grounded = true;
             jumpCount = 0;
         }
@@ -40,7 +39,7 @@ public class cat_movement : MonoBehaviour
     }
 
     void OnCollisionExit(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
+        if ((col.gameObject.tag == "floor_tag")) {
             grounded = false;
         }
         if (col.gameObject.tag == "wall_tag") {
