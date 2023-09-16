@@ -58,7 +58,6 @@ public class dog_movement : MonoBehaviour
         float speed = moveSpeed;
         
         if ((Input.GetKey(KeyCode.S) == false) && inPound && (delayed == false) && (Time.time - poundTime >= poundDelay)) {
-            Debug.Log("Delay Release");
             delayed = true;
             windUp = false;
         }
@@ -99,7 +98,6 @@ public class dog_movement : MonoBehaviour
         }
 
         if (inPound && (Time.time - poundTime >= maxDelay)) {
-            Debug.Log("Pound delay timeout");
             delayed = true;
             windUp = false;
         }
