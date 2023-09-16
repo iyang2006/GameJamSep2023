@@ -9,15 +9,14 @@ public class cat_movement : MonoBehaviour
     [SerializeField] private Rigidbody body;
     [SerializeField] private BoxCollider collid;
     [SerializeField] private float jumpStrength;
+    [SerializeField] private float poundStrength;
     private Vector3 movement;
     private bool grounded;
-    private int jumpCount;
 
     // Start is called before the first frame update
     void Start()
     {
         grounded = true;
-        jumpCount = 0;
     }
 
     void OnCollisionEnter(Collision col) {

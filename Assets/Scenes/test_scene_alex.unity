@@ -272,6 +272,8 @@ MonoBehaviour:
   moveSpeed: 1
   body: {fileID: 233708163}
   collid: {fileID: 0}
+  jumpStrength: 2
+  poundStrength: 2
 --- !u!1 &372127436
 GameObject:
   m_ObjectHideFlags: 0
