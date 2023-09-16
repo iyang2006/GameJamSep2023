@@ -7,6 +7,8 @@ public class cat_movement : MonoBehaviour
     
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
+    [SerializeField] private Transform trans;
+    [SerializeField] private float rayLength;
     [SerializeField] private float jumpStrength;
     private Vector3 movement;
     private bool grounded;
@@ -28,22 +30,29 @@ public class cat_movement : MonoBehaviour
         inJump = true;
     }
 
+    private LayerMask mask = LayerMask.GetMask("cat");
+
     void OnCollisionEnter(Collision col) {
-        if ((col.gameObject.tag == "floor_tag") || (col.gameObject.tag == "dog")) {
-            grounded = true;
-            jumpCount = 0;
-        }
-        if (col.gameObject.tag == "wall_tag") {
-            onWall = true;
+        if (col.gameObject.tag == "platform_tag") {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+                Debug.Log("cat grounded");
+                grounded = true;
+                jumpCount = 0;
+            }
+            else if (Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask)) {
+                onWall = true;
+            }
         }
     }
 
     void OnCollisionExit(Collision col) {
-        if ((col.gameObject.tag == "floor_tag")) {
-            grounded = false;
-        }
-        if (col.gameObject.tag == "wall_tag") {
-            onWall = false;
+        if (col.gameObject.tag == "platform_tag") {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+                grounded = false;
+            }
+            else if (Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask)) {
+                onWall = false;
+            }
         }
     }
 
@@ -74,7 +83,7 @@ public class cat_movement : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow)) {
             if (grounded == true) {
                 grounded = false;
-                Debug.Log("Jump");
+                Debug.Log("cat jump");
                 Vector3 vel = body.velocity;
                 vel.y = 5 * jumpStrength;
                 body.velocity = vel;
@@ -84,7 +93,7 @@ public class cat_movement : MonoBehaviour
                 movement.x = 0;
                 jumpTime = Time.time;
                 onWall = false;
-                Debug.Log("Wall jump");
+                Debug.Log("wall jump");
                 jumpCount += 1;
                 Debug.Log(jumpCount);
                 Vector3 vel = body.velocity;
