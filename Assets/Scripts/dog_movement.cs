@@ -13,11 +13,13 @@ public class dog_movement : MonoBehaviour
     [SerializeField] private float poundStrength;
     private Vector3 movement;
     private bool grounded;
+    private bool inPound;
 
     // Start is called before the first frame update
     void Start()
     {
         grounded = true;
+        inPound = false;
     }
 
     private LayerMask mask = LayerMask.GetMask("dog");
@@ -25,6 +27,7 @@ public class dog_movement : MonoBehaviour
         if (col.gameObject.tag == "platform_tag") {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
                 Debug.Log("dog grounded");
+                inPound = false;
                 grounded = true;
             }
         }
@@ -64,6 +67,7 @@ public class dog_movement : MonoBehaviour
         //ground pound
         if (Input.GetKey(KeyCode.S) && grounded == false) {
             Debug.Log("pound");
+            inPound = true;
             Vector3 vel = body.velocity;
             vel.y = -10 * poundStrength;
             body.velocity = vel;
