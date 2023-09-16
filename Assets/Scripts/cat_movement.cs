@@ -47,7 +47,8 @@ public class cat_movement : MonoBehaviour
 
     void OnCollisionExit(Collision col) {
         if (col.gameObject.tag == "platform_tag") {
-            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)
+            && !(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
                 grounded = false;
             }
             else if (Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask)) {
