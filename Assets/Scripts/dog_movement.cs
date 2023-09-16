@@ -7,6 +7,8 @@ public class dog_movement : MonoBehaviour
     
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
+    [SerializeField] private Transform trans;
+    [SerializeField] private float rayLength;
     [SerializeField] private float jumpStrength;
     [SerializeField] private float poundStrength;
     private Vector3 movement;
@@ -18,15 +20,21 @@ public class dog_movement : MonoBehaviour
         grounded = true;
     }
 
+    private LayerMask mask = LayerMask.GetMask("dog");
     void OnCollisionEnter(Collision col) {
-        if ((col.gameObject.tag == "floor_tag") || (col.gameObject.tag == "cat")) {
-            grounded = true;
+        if (col.gameObject.tag == "platform_tag") {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+                Debug.Log("dog grounded");
+                grounded = true;
+            }
         }
     }
 
     void OnCollisionExit(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
-            grounded = false;
+        if (col.gameObject.tag == "platform_tag") {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+                grounded = false;
+            }
         }
     }
 
@@ -46,7 +54,7 @@ public class dog_movement : MonoBehaviour
 
         //jumping
         if (Input.GetKey(KeyCode.W) && grounded == true) {
-            Debug.Log("Jump");
+            Debug.Log("dog jump");
             grounded = false;
             Vector3 vel = body.velocity;
             vel.y = 5 * jumpStrength;
@@ -55,7 +63,7 @@ public class dog_movement : MonoBehaviour
 
         //ground pound
         if (Input.GetKey(KeyCode.S) && grounded == false) {
-            Debug.Log("Pound");
+            Debug.Log("pound");
             Vector3 vel = body.velocity;
             vel.y = -10 * poundStrength;
             body.velocity = vel;
