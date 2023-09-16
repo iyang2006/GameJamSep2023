@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Button : MonoBehaviour
 {
+    GameObject platform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,10 @@ public class Button : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        //collision.gameObject.GetComponent<tag>
     }
 }
