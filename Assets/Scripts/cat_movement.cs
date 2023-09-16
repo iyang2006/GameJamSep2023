@@ -13,9 +13,10 @@ public class cat_movement : MonoBehaviour
     private int jumpCount;
     private bool onWall;
     private bool leftWall;
-    // private bool inJump;
-    // private float jumpTime;
-    // [SerializeField] private float jumpTimeLimit;
+    [SerializeField] private float wallJumpStrength;
+    private bool inJump;
+    private float jumpTime;
+    [SerializeField] private float jumpTimeLimit;
 
     // Start is called before the first frame update
     void Start()
@@ -24,8 +25,7 @@ public class cat_movement : MonoBehaviour
         jumpCount = 0;
         onWall = false;
         leftWall = true;
-        //inJump = false;
-        //jumpTime = 0;
+        inJump = true;
     }
 
     void OnCollisionEnter(Collision col) {
@@ -50,22 +50,24 @@ public class cat_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        // if (Time.time - jumpTime >= jumpTimeLimit) {
-        //     jumpTime = 0;
-        //     inJump = false;
-        // }
+        if (Time.time - jumpTime >= jumpTimeLimit) {
+            jumpTime = 0;
+            inJump = false;
+        }
 
         //horizontal movement
-        if (Input.GetKey(KeyCode.LeftArrow) == Input.GetKey(KeyCode.RightArrow)) {
-            movement.x = 0;
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow)) {
-            movement.x = -1;
-            leftWall = true;
-        }
-        else {
-            movement.x = 1;
-            leftWall = false;
+        if (inJump == false) {
+            if (Input.GetKey(KeyCode.LeftArrow) == Input.GetKey(KeyCode.RightArrow)) {
+                movement.x = 0;
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow)) {
+                movement.x = -1;
+                leftWall = true;
+            }
+            else {
+                movement.x = 1;
+                leftWall = false;
+            }
         }
 
         //jumping
@@ -78,14 +80,15 @@ public class cat_movement : MonoBehaviour
                 body.velocity = vel;
             }
             else if (onWall == true && jumpCount < 3) {
-                // inJump = true;
-                // jumpTime = Time.time;
+                inJump = true;
+                movement.x = 0;
+                jumpTime = Time.time;
                 onWall = false;
                 Debug.Log("Wall jump");
                 jumpCount += 1;
                 Debug.Log(jumpCount);
                 Vector3 vel = body.velocity;
-                vel.y = 5 * jumpStrength;
+                vel.y = 5 * wallJumpStrength;
                 if (leftWall == true) {
                     vel.x = 2 * jumpStrength;
                 }
