@@ -9,6 +9,7 @@ TagManager:
   - cat
   - dog
   - box
+  - button
   layers:
   - Default
   - TransparentFX
@@ -19,11 +20,11 @@ TagManager:
   - Player
   - Walls
   - Interactables
+  - cat
+  - dog
   - 
-  - 
-  - 
-  - 
-  - 
+  - boxes
+  - platforms
   - 
   - 
   - 
