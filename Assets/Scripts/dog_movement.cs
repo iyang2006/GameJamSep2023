@@ -7,38 +7,95 @@ public class dog_movement : MonoBehaviour
     
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
-    [SerializeField] private BoxCollider collid;
+    [SerializeField] private Transform trans;
+    [SerializeField] private float rayLength;
     [SerializeField] private float jumpStrength;
     [SerializeField] private float poundStrength;
     private Vector3 movement;
     private bool grounded;
+    private bool inPound;
+    private bool windUp;
+    [SerializeField] private float poundDelay;
+    [SerializeField] private float maxDelay;
+    private float poundTime;
+    private bool delayed;
+    [SerializeField] private float poundRad;
+
 
     // Start is called before the first frame update
     void Start()
     {
         grounded = true;
+        inPound = false;
+        windUp = false;
+        poundTime = 0;
+        delayed = false;
     }
 
+    private LayerMask mask = LayerMask.GetMask("dog");
     void OnCollisionEnter(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
-            grounded = true;
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+                Debug.Log("dog grounded");
+                if (inPound) {
+                    BombThem((Time.time - poundTime));
+                }
+                inPound = false;
+                poundTime = 0;
+                delayed = false;
+                grounded = true;
+            }
         }
     }
 
     void OnCollisionExit(Collision col) {
-        if (col.gameObject.tag == "floor_tag") {
-            grounded = false;
+        if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
+            if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)
+            && !(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
+                grounded = false;
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {   
+        float speed = moveSpeed;
+        
+        if ((Input.GetKey(KeyCode.S) == false) && inPound && (delayed == false) && (Time.time - poundTime >= poundDelay)) {
+            delayed = true;
+            windUp = false;
+        }
+
+        Vector3 tempV = body.velocity;
+        tempV.x = 0;
+        tempV.z = 0;
+        body.velocity = tempV;
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
+            grounded = false;
+        }
+
+        if (inPound) {
+            if (windUp) {
+                speed = (float)(0.3 * moveSpeed);
+                Vector3 vel = body.velocity;
+                vel.y = (float)(vel.y * 0.5);
+                movement.y = 1;
+                body.velocity = vel;
+            }
+            else {
+                movement.y = 0;
+                Vector3 vel = body.velocity;
+                vel.y = -10 * poundStrength;
+                body.velocity = vel;
+            }
+        }
         //horizontal movement
-        if (Input.GetKey(KeyCode.LeftArrow) == Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.A) == Input.GetKey(KeyCode.D)) {
             movement.x = 0;
         }
-        else if (Input.GetKey(KeyCode.LeftArrow)) {
+        else if (Input.GetKey(KeyCode.A)) {
             movement.x = -1;
         }
         else {
@@ -46,22 +103,43 @@ public class dog_movement : MonoBehaviour
         }
 
         //jumping
-        if (Input.GetKey(KeyCode.UpArrow) && grounded == true) {
-            Debug.Log("Jump");
+        if (Input.GetKey(KeyCode.W) && grounded == true) {
+            Debug.Log("dog jump");
+            grounded = false;
             Vector3 vel = body.velocity;
             vel.y = 5 * jumpStrength;
             body.velocity = vel;
         }
 
-        //ground pound
-        if (Input.GetKey(KeyCode.DownArrow) && grounded == false) {
-            Debug.Log("Pound");
-            Vector3 vel = body.velocity;
-            vel.y = -10 * poundStrength;
-            body.velocity = vel;
+        if (inPound && (Time.time - poundTime >= maxDelay)) {
+            delayed = true;
+            windUp = false;
         }
 
-        body.MovePosition(body.position + (movement * moveSpeed * Time.fixedDeltaTime));
+        //ground pound
+        if (!(inPound && delayed)) {
+            if (Input.GetKey(KeyCode.S) && grounded == false) {
+                if (inPound == false) {
+                    Debug.Log("initiate pounding");
+                    poundTime = Time.time;
+                }
+                inPound = true;
+                windUp = true;
+            }
+        }
 
+        body.MovePosition(body.position + (movement * speed * Time.fixedDeltaTime));
+    }
+
+    private void BombThem(float intensity) {
+        Collider[] colliders = Physics.OverlapSphere(trans.position, poundRad);
+        foreach (Collider c in colliders) {
+            if (c.gameObject.tag == "cat") {
+                c.GetComponent<cat_movement>().Bomb(intensity);
+            }
+            else if (c.gameObject.tag == "box") {
+                c.GetComponent<box_controller>().Bomb(intensity);
+            }
+        }
     }
 }

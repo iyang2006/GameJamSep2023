@@ -9,7 +9,7 @@ TagManager:
   - cat
   - dog
   - box
-  - button
+  - platform_tag
   layers:
   - Default
   - TransparentFX
