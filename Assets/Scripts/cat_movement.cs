@@ -12,23 +12,32 @@ public class cat_movement : MonoBehaviour
     private Vector3 movement;
     private bool grounded;
     private int jumpCount;
+    private bool onWall;
 
     // Start is called before the first frame update
     void Start()
     {
         grounded = true;
         jumpCount = 0;
+        onWall = false;
     }
 
     void OnCollisionEnter(Collision col) {
         if (col.gameObject.tag == "floor_tag") {
             grounded = true;
+            jumpCount = 0;
+        }
+        if (col.gameObject.tag == "wall_tag") {
+            onWall = true;
         }
     }
 
     void OnCollisionExit(Collision col) {
         if (col.gameObject.tag == "floor_tag") {
             grounded = false;
+        }
+        if (col.gameObject.tag == "wall_tag") {
+            onWall = false;
         }
     }
 
@@ -47,19 +56,21 @@ public class cat_movement : MonoBehaviour
         }
 
         //jumping
-        if (Input.GetKey(KeyCode.UpArrow) && grounded == true) {
-            Debug.Log("Jump");
-            Vector3 vel = body.velocity;
-            vel.y = 5 * jumpStrength;
-            body.velocity = vel;
-        }
-
-        //ground pound
-        if (Input.GetKey(KeyCode.DownArrow) && grounded == false) {
-            Debug.Log("Pound");
-            Vector3 vel = body.velocity;
-            vel.y = -10 * poundStrength;
-            body.velocity = vel;
+        if (Input.GetKey(KeyCode.UpArrow)) {
+            if (grounded == true) {
+                Debug.Log("Jump");
+                Vector3 vel = body.velocity;
+                vel.y = 5 * jumpStrength;
+                body.velocity = vel;
+            }
+            else if (onWall == true && jumpCount < 3) {
+                Debug.Log("Wall jump");
+                jumpCount += 1;
+                Debug.Log(jumpCount);
+                Vector3 vel = body.velocity;
+                vel.y = 5 * jumpStrength;
+                body.velocity = vel;
+            }
         }
 
         body.MovePosition(body.position + (movement * moveSpeed * Time.fixedDeltaTime));

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class cat_movement : MonoBehaviour
+public class dog_movement : MonoBehaviour
 {
     
     [SerializeField] private float moveSpeed;
