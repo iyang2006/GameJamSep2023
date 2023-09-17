@@ -19,6 +19,7 @@ public class cat_movement : MonoBehaviour
     [SerializeField] private float wallJumpStrength;
     private bool inJump;
     private float jumpTime;
+    private bool bounce;
     [SerializeField] private float jumpTimeLimit;
 
     // Start is called before the first frame update
@@ -29,6 +30,7 @@ public class cat_movement : MonoBehaviour
         onWall = false;
         leftWall = true;
         inJump = true;
+        bounce = false;
     }
 
     private LayerMask mask = LayerMask.GetMask("cat");
@@ -54,6 +56,7 @@ public class cat_movement : MonoBehaviour
             }
             else if (Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask)) {
                 onWall = false;
+                bounce = false;
             }
         }
     }
@@ -78,6 +81,7 @@ public class cat_movement : MonoBehaviour
 
         if (!(Physics.Raycast(trans.position, (trans.right), rayLength, groundMask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, groundMask))) {
             onWall = false;
+            bounce = false;
         }
         else {
             onWall = true;
@@ -118,7 +122,10 @@ public class cat_movement : MonoBehaviour
                 jumpTime = Time.time;
                 onWall = false;
                 Debug.Log("wall jump");
-                jumpCount += 1;
+                if (bounce == false) {
+                    jumpCount += 1;
+                }
+                bounce = true;
                 Debug.Log(jumpCount);
                 Vector3 vel = body.velocity;
                 vel.y = 5 * wallJumpStrength;
