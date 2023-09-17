@@ -29,11 +29,12 @@ public class dog_movement : MonoBehaviour
     [SerializeField] private AudioSource poundSound;
     [SerializeField] private AudioSource rarePoundSound;
     [SerializeField] private float rarePoundSoundIntensity;
-
+    private LayerMask mask;
 
     // Start is called before the first frame update
     void Start()
     {
+        mask = LayerMask.GetMask("dog");
         grounded = true;
         inPound = false;
         windUp = false;
@@ -42,7 +43,7 @@ public class dog_movement : MonoBehaviour
         leftWall = true;
     }
 
-    private LayerMask mask = LayerMask.GetMask("dog");
+
     void OnCollisionEnter(Collision col) {
         if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {

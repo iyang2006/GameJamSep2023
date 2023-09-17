@@ -11,7 +11,7 @@ public class box_controller : MonoBehaviour
     [SerializeField] private float rayLength;
     private bool grounded;
 
-    private LayerMask mask = LayerMask.GetMask("boxes");
+    private LayerMask mask;
 
     void OnCollisionEnter(Collision col) {
         if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
@@ -29,6 +29,7 @@ public class box_controller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        mask = LayerMask.GetMask("boxes");
         grounded = true;
     }
 

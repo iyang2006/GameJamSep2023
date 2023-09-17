@@ -24,10 +24,13 @@ public class cat_movement : MonoBehaviour
 
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource catSound;
+    private LayerMask mask; 
+
 
     // Start is called before the first frame update
     void Start()
     {
+        mask = LayerMask.GetMask("cat");
         grounded = true;
         jumpCount = 0;
         onWall = false;
@@ -36,7 +39,6 @@ public class cat_movement : MonoBehaviour
         bounce = false;
     }
 
-    private LayerMask mask = LayerMask.GetMask("cat");
 
     void OnCollisionEnter(Collision col) {
         if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
