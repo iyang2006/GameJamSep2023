@@ -61,21 +61,31 @@ public class cat_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
-            grounded = true;
-        }     
+        int groundMask = 1 << LayerMask.NameToLayer("platforms");
+        int boxMask = 1 << LayerMask.NameToLayer("boxes");
 
-        if (!(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, groundMask)) {
+            grounded = true;
+        }
+        else {
+            grounded = false;
+        }
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, boxMask)) {
+            grounded = true;
+        }
+
+
+        if (!(Physics.Raycast(trans.position, (trans.right), rayLength, groundMask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, groundMask))) {
             onWall = false;
+        }
+        else {
+            onWall = true;
         }
 
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
-        }
-
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
-            grounded = false;
         }
 
         //horizontal movement
