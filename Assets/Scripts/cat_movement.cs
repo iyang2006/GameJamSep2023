@@ -71,6 +71,7 @@ public class cat_movement : MonoBehaviour
             grounded = true;
         }
         else {
+            Debug.Log("uh oh retard alert");
             grounded = false;
         }
 
