@@ -48,11 +48,13 @@ public class Lever : MonoBehaviour
                     active = true;
                     platform.Activate();
                     GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+                    GetComponent<AudioSource>().Play();
                 } else if (!activeRight && active)
                 {
                     active = false;
                     platform.Deactivate();
                     GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+                    GetComponent<AudioSource>().Play();
                 }
             } else if (leftWall)
             {
@@ -61,11 +63,13 @@ public class Lever : MonoBehaviour
                     active = true;
                     platform.Activate();
                     GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+                    GetComponent<AudioSource>().Play();
                 } else if (activeRight && active)
                 {
                     active = false;
                     platform.Deactivate();
                     GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
+                    GetComponent<AudioSource>().Play();
                 }
             }
 
