@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class dog_movement : MonoBehaviour
 {
-    
+
     [SerializeField] private float moveSpeed;
     [SerializeField] private Rigidbody body;
     [SerializeField] private Transform trans;
@@ -62,9 +62,19 @@ public class dog_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+        int groundMask = 1 << LayerMask.NameToLayer("platforms");
+        int boxMask = 1 << LayerMask.NameToLayer("boxes");
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, groundMask)) {
             grounded = true;
-        }     
+        }
+        else {
+            grounded = false;
+        }
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, boxMask)) {
+            grounded = true;
+        }
 
         float speed = moveSpeed;
         
@@ -78,9 +88,6 @@ public class dog_movement : MonoBehaviour
         tempV.z = 0;
         body.velocity = tempV;
 
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
-            grounded = false;
-        }
 
         if (inPound) {
             if (windUp) {
