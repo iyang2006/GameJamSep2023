@@ -149,7 +149,7 @@ MonoBehaviour:
   moveSpeed: 2
   body: {fileID: 7770044938675920288}
   trans: {fileID: 3059640592811527204}
-  rayLength: 1
+  rayLength: 0.5
   jumpStrength: 2
   poundIntensity: 30
   wallJumpStrength: 1.5

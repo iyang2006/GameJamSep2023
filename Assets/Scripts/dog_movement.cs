@@ -19,6 +19,7 @@ public class dog_movement : MonoBehaviour
     [SerializeField] private float maxDelay;
     private float poundTime;
     private bool delayed;
+    public bool leftWall;
     [SerializeField] private float poundRad;
 
 
@@ -30,6 +31,7 @@ public class dog_movement : MonoBehaviour
         windUp = false;
         poundTime = 0;
         delayed = false;
+        leftWall = true;
     }
 
     private LayerMask mask = LayerMask.GetMask("dog");
@@ -60,6 +62,10 @@ public class dog_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+            grounded = true;
+        }     
+
         float speed = moveSpeed;
         
         if ((Input.GetKey(KeyCode.S) == false) && inPound && (delayed == false) && (Time.time - poundTime >= poundDelay)) {
@@ -97,9 +103,11 @@ public class dog_movement : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A)) {
             movement.x = -1;
+            leftWall = true;
         }
         else {
             movement.x = 1;
+            leftWall = false;
         }
 
         //jumping
