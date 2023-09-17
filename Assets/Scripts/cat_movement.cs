@@ -22,6 +22,9 @@ public class cat_movement : MonoBehaviour
     private bool bounce;
     [SerializeField] private float jumpTimeLimit;
 
+    [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource catSound;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -120,6 +123,7 @@ public class cat_movement : MonoBehaviour
                 Vector3 vel = body.velocity;
                 vel.y = 5 * jumpStrength;
                 body.velocity = vel;
+                jumpSound.Play();
             }
             else if (onWall == true && jumpCount < 3) {
                 inJump = true;
@@ -141,6 +145,9 @@ public class cat_movement : MonoBehaviour
                     vel.x = -2 * jumpStrength;
                 }
                 body.velocity = vel;
+                catSound.pitch = (4 - jumpCount);
+                catSound.Play();
+                catSound.pitch = (4 - jumpCount);
             }
         }
 
