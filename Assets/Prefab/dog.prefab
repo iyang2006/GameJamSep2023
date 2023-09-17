@@ -160,6 +160,7 @@ MonoBehaviour:
   maxDelay: 0.4
   leftWall: 0
   poundRad: 3
+  mainCamera: {fileID: 0}
   jumpSound: {fileID: 2398574663439524460}
   dogSound: {fileID: 1753815816985065476}
   poundSound: {fileID: 4941474787697913416}
@@ -175,10 +176,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: f24e5336cde2e484e8b92bd795fbbc56, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 572a371091607394f8bea954569d4ddc, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0
