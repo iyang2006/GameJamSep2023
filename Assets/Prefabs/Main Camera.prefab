@@ -244,7 +244,7 @@ MonoBehaviour:
   xOffset: 0
   zOffset: 8
   maxZ: -15
-  maxOsc: 0.5
+  maxOsc: 0.8
   shakeDecrease: 10
   shakeSpeed: 20
 --- !u!114 &-5978677249682287267
