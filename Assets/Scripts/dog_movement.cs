@@ -21,6 +21,7 @@ public class dog_movement : MonoBehaviour
     private bool delayed;
     public bool leftWall;
     [SerializeField] private float poundRad;
+    [SerializeField] private Camera mainCamera;
 
 
     // Start is called before the first frame update
@@ -41,6 +42,7 @@ public class dog_movement : MonoBehaviour
                 Debug.Log("dog grounded");
                 if (inPound) {
                     BombThem((Time.time - poundTime));
+                    mainCamera.GetComponent<camera_controller>().shakeScreen((Time.time - poundTime));
                 }
                 inPound = false;
                 poundTime = 0;

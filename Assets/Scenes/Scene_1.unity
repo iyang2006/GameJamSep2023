@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -631,6 +631,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4245678168134655406, guid: 6d8f14c5ecf35204db383115bccbd239,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 1447565038}
     - target: {fileID: 4288302003188232339, guid: 6d8f14c5ecf35204db383115bccbd239,
         type: 3}
       propertyPath: m_Name
@@ -1198,7 +1203,7 @@ PrefabInstance:
     - target: {fileID: 4125337301019123948, guid: 68faa185a3d46a94fabfd3666b9a4fe0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.053863
+      value: 10.37
       objectReference: {fileID: 0}
     - target: {fileID: 4125337301019123948, guid: 68faa185a3d46a94fabfd3666b9a4fe0,
         type: 3}
@@ -2073,6 +2078,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6796078684373249514, guid: c4fab294f48f04d4bb19108a45ca261d,
     type: 3}
   m_PrefabInstance: {fileID: 935632572}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1312099492 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4288302003188232339, guid: 6d8f14c5ecf35204db383115bccbd239,
+    type: 3}
+  m_PrefabInstance: {fileID: 151084932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1447565038 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6526111845747572860, guid: f9c055e32ec5ee64d9d5794410ee4757,
+    type: 3}
+  m_PrefabInstance: {fileID: 512841220688774079}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1588471513
 PrefabInstance:
@@ -3267,7 +3284,7 @@ PrefabInstance:
     - target: {fileID: 4125337301019123948, guid: 68faa185a3d46a94fabfd3666b9a4fe0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.8201036
+      value: -4.45
       objectReference: {fileID: 0}
     - target: {fileID: 4125337301019123948, guid: 68faa185a3d46a94fabfd3666b9a4fe0,
         type: 3}
@@ -3435,6 +3452,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1395384502620289721, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: cat
+      value: 
+      objectReference: {fileID: 521752233}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: dog
+      value: 
+      objectReference: {fileID: 1312099492}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: maxOsc
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: zOffset
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: shakeSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: shakeDecrease
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629301377258653487, guid: f9c055e32ec5ee64d9d5794410ee4757,
+        type: 3}
+      propertyPath: shakeIntensity
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
