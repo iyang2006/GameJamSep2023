@@ -12,6 +12,10 @@ public class Lever : MonoBehaviour
     void Start()
     {
         active = false;
+        if (activeRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+        }
     }
 
     // Update is called once per frame
@@ -43,10 +47,12 @@ public class Lever : MonoBehaviour
                 {
                     active = true;
                     platform.Activate();
+                    GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
                 } else if (!activeRight && active)
                 {
                     active = false;
                     platform.Deactivate();
+                    GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
                 }
             } else if (leftWall)
             {
@@ -54,10 +60,12 @@ public class Lever : MonoBehaviour
                 {
                     active = true;
                     platform.Activate();
+                    GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
                 } else if (activeRight && active)
                 {
                     active = false;
                     platform.Deactivate();
+                    GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
                 }
             }
 
