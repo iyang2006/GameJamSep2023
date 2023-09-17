@@ -146,7 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c92ec58ab3d2542826ec095dc7af72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
   body: {fileID: 7164493873470701472}
   trans: {fileID: 897118756525846794}
   rayLength: 1
@@ -154,4 +154,5 @@ MonoBehaviour:
   poundStrength: 3
   poundDelay: 0.15
   maxDelay: 0.4
+  leftWall: 0
   poundRad: 3

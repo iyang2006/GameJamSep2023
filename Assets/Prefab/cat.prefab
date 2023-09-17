@@ -146,11 +146,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6357ace360c7e104b8800360674a8695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 2
+  moveSpeed: 3
   body: {fileID: 7770044938675920288}
   trans: {fileID: 3059640592811527204}
   rayLength: 0.5
   jumpStrength: 2
   poundIntensity: 30
+  grounded: 0
+  leftWall: 0
   wallJumpStrength: 1.5
   jumpTimeLimit: 0.5
