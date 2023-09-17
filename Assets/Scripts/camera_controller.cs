@@ -57,7 +57,7 @@ public class camera_controller : MonoBehaviour
         
         float dt = Time.time - shakeInit;
         if (dt <= maxOsc) {
-            float shakeY = (float) (Math.Exp(-shakeDecrease * (1/iscalar) * dt) * Math.Cos(shakeSpeed * dt * Math.PI));
+            float shakeY = (float) (Math.Exp(-shakeDecrease * (1 / (iscalar * 4)) * dt) * Math.Cos(shakeSpeed * dt * Math.PI));
             camPos.y += shakeY * shakeIntensity * iscalar;
         }
 
