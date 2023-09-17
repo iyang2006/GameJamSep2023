@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4251254268292695051}
   - component: {fileID: 2432131408581172126}
   - component: {fileID: -2549744132478718377}
+  - component: {fileID: 5586933351372605499}
   m_Layer: 8
   m_Name: Lever
   m_TagString: button
@@ -121,3 +122,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &5586933351372605499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004630947586607454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 617abec72ce2bc7498887eb411bee94b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: 2
