@@ -19,6 +19,7 @@ public class cat_movement : MonoBehaviour
     [SerializeField] private float wallJumpStrength;
     private bool inJump;
     private float jumpTime;
+    private bool bounce;
     [SerializeField] private float jumpTimeLimit;
 
     // Start is called before the first frame update
@@ -29,6 +30,7 @@ public class cat_movement : MonoBehaviour
         onWall = false;
         leftWall = true;
         inJump = true;
+        bounce = false;
     }
 
     private LayerMask mask = LayerMask.GetMask("cat");
@@ -54,6 +56,7 @@ public class cat_movement : MonoBehaviour
             }
             else if (Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask)) {
                 onWall = false;
+                bounce = false;
             }
         }
     }
@@ -61,21 +64,32 @@ public class cat_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
-            grounded = true;
-        }     
+        int groundMask = 1 << LayerMask.NameToLayer("platforms");
+        int boxMask = 1 << LayerMask.NameToLayer("boxes");
 
-        if (!(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, groundMask)) {
+            grounded = true;
+        }
+        else {
+            grounded = false;
+        }
+
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, boxMask)) {
+            grounded = true;
+        }
+
+
+        if (!(Physics.Raycast(trans.position, (trans.right), rayLength, groundMask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, groundMask))) {
             onWall = false;
+            bounce = false;
+        }
+        else {
+            onWall = true;
         }
 
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
-        }
-
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask) == false) {
-            grounded = false;
         }
 
         //horizontal movement
@@ -108,7 +122,10 @@ public class cat_movement : MonoBehaviour
                 jumpTime = Time.time;
                 onWall = false;
                 Debug.Log("wall jump");
-                jumpCount += 1;
+                if (bounce == false) {
+                    jumpCount += 1;
+                }
+                bounce = true;
                 Debug.Log(jumpCount);
                 Vector3 vel = body.velocity;
                 vel.y = 5 * wallJumpStrength;
