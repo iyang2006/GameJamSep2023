@@ -140,7 +140,7 @@ public class cat_movement : MonoBehaviour
             }
         }
 
-        body.MovePosition(body.position + (movement * moveSpeed * Time.fixedDeltaTime));
+        body.MovePosition(body.position + (movement * moveSpeed * Time.deltaTime));
 
     }
 
