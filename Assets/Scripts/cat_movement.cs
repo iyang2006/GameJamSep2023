@@ -60,7 +60,10 @@ public class cat_movement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
+    {
+
+        Debug.Log("Lever Cat Velocity.x: " + body.velocity.x);
+
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
