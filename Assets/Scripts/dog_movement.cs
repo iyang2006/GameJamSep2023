@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,6 +24,12 @@ public class dog_movement : MonoBehaviour
     [SerializeField] private float poundRad;
     [SerializeField] private Camera mainCamera;
 
+    [SerializeField] private AudioSource jumpSound;
+    [SerializeField] private AudioSource dogSound;
+    [SerializeField] private AudioSource poundSound;
+    [SerializeField] private AudioSource rarePoundSound;
+    [SerializeField] private float rarePoundSoundIntensity;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +48,15 @@ public class dog_movement : MonoBehaviour
             if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
                 Debug.Log("dog grounded");
                 if (inPound) {
+                    Debug.Log("Pound Intensity: " + (Time.time - poundTime));
+                    if (Time.time - poundTime > rarePoundSoundIntensity)
+                    {
+                        rarePoundSound.Play();
+                    } else
+                    {
+                        poundSound.Play();
+                    }
+
                     BombThem((Time.time - poundTime));
                     mainCamera.GetComponent<camera_controller>().shakeScreen((Time.time - poundTime));
                 }
@@ -126,6 +142,7 @@ public class dog_movement : MonoBehaviour
             Vector3 vel = body.velocity;
             vel.y = 5 * jumpStrength;
             body.velocity = vel;
+            jumpSound.Play();
         }
 
         if (inPound && (Time.time - poundTime >= maxDelay)) {
@@ -138,6 +155,7 @@ public class dog_movement : MonoBehaviour
             if (Input.GetKey(KeyCode.S) && grounded == false) {
                 if (inPound == false) {
                     Debug.Log("initiate pounding");
+                    dogSound.Play();
                     poundTime = Time.time;
                 }
                 inPound = true;

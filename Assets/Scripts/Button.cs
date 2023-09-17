@@ -7,6 +7,8 @@ using UnityEngine;
 public class Button : MonoBehaviour
 {
     [SerializeField] private GameObject targetPlatform;
+    [SerializeField] private AudioSource activationSound;
+    [SerializeField] private AudioSource deactivationSound;
     private ArrayList colliders;
 
     private Color activatedColor = new Color(45f/255f, 241f/255f, 163f/255f, 1f);
@@ -38,6 +40,7 @@ public class Button : MonoBehaviour
             {
                 platform.Activate();
                 GetComponent<SpriteRenderer>().color = activatedColor;
+                activationSound.Play();
             }
             colliders.Add(collider);
         }
@@ -54,6 +57,7 @@ public class Button : MonoBehaviour
             {
                 platform.Deactivate();
                 GetComponent<SpriteRenderer>().color = deactivatedColor;
+                deactivationSound.Play();
             }
             if (colliders.Contains(collider))
             {
