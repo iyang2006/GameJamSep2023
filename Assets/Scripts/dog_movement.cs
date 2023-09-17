@@ -22,6 +22,7 @@ public class dog_movement : MonoBehaviour
     private bool delayed;
     public bool leftWall;
     [SerializeField] private float poundRad;
+    [SerializeField] private Camera mainCamera;
 
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource dogSound;
@@ -57,6 +58,7 @@ public class dog_movement : MonoBehaviour
                     }
 
                     BombThem((Time.time - poundTime));
+                    mainCamera.GetComponent<camera_controller>().shakeScreen((Time.time - poundTime));
                 }
                 inPound = false;
                 poundTime = 0;
