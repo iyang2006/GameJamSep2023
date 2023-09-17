@@ -83,14 +83,20 @@ public class dog_movement : MonoBehaviour
         int groundMask = 1 << LayerMask.NameToLayer("platforms");
         int boxMask = 1 << LayerMask.NameToLayer("boxes");
 
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, groundMask)) {
+        Vector3 leftPos = trans.position;
+        leftPos.x -= 0.74f;
+        Vector3 rightPos = trans.position;
+        rightPos.x += 0.74f;
+
+        if ((Physics.Raycast(leftPos, (trans.up * -1), rayLength, groundMask)) || (Physics.Raycast(rightPos, (trans.up * -1), rayLength, groundMask))) {
             grounded = true;
         }
         else {
+            Debug.Log("uh oh retard alert");
             grounded = false;
         }
 
-        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, boxMask)) {
+        if ((Physics.Raycast(leftPos, (trans.up * -1), rayLength, boxMask)) || (Physics.Raycast(rightPos, (trans.up * -1), rayLength, boxMask))) {
             grounded = true;
         }
 
