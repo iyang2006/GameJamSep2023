@@ -14,7 +14,7 @@ public class cat_movement : MonoBehaviour
     private Vector3 movement;
     [SerializeField] private bool grounded;
     private int jumpCount;
-    private bool onWall;
+    [SerializeField] private bool onWall;
     public bool leftWall;
     [SerializeField] private float wallJumpStrength;
     private bool inJump;
@@ -87,6 +87,11 @@ public class cat_movement : MonoBehaviour
             onWall = true;
         }
 
+        if ((Physics.Raycast(trans.position, (trans.right), rayLength, boxMask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, boxMask)))
+        {
+            onWall = true;
+        }
+
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
@@ -139,7 +144,7 @@ public class cat_movement : MonoBehaviour
             }
         }
 
-        body.MovePosition(body.position + (movement * moveSpeed * Time.fixedDeltaTime));
+        body.MovePosition(body.position + (movement * moveSpeed * Time.deltaTime));
 
     }
 
