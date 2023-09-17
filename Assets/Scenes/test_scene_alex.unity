@@ -614,7 +614,7 @@ Transform:
   m_GameObject: {fileID: 1067991734}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.94, y: 2.2982872, z: 5.5438557}
+  m_LocalPosition: {x: 2.53, y: 2.2982872, z: 5.5438557}
   m_LocalScale: {x: 0.64, y: 12.18, z: 9.09}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -825,7 +825,7 @@ Transform:
   m_GameObject: {fileID: 1301607391}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.22, y: 2.2982872, z: 5.5438557}
+  m_LocalPosition: {x: -11.94, y: 2.2982872, z: 5.5438557}
   m_LocalScale: {x: 0.64, y: 12.18, z: 9.09}
   m_ConstrainProportionsScale: 0
   m_Children: []

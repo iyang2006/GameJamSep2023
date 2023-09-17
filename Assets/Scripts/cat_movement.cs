@@ -61,6 +61,10 @@ public class cat_movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+            grounded = true;
+        }     
+
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
             inJump = false;
