@@ -143,7 +143,7 @@ public class dog_movement : MonoBehaviour
             }
         }
 
-        body.MovePosition(body.position + (movement * speed * Time.fixedDeltaTime));
+        body.MovePosition(body.position + (movement * speed * Time.deltaTime));
     }
 
     private void BombThem(float intensity) {
