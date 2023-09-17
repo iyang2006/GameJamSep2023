@@ -12,7 +12,7 @@ public class cat_movement : MonoBehaviour
     [SerializeField] private float jumpStrength;
     [SerializeField] private float poundIntensity;
     private Vector3 movement;
-    private bool grounded;
+    [SerializeField] private bool grounded;
     private int jumpCount;
     private bool onWall;
     public bool leftWall;
@@ -64,6 +64,10 @@ public class cat_movement : MonoBehaviour
         if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
             grounded = true;
         }     
+
+        if (!(Physics.Raycast(trans.position, (trans.right), rayLength, ~mask) || Physics.Raycast(trans.position, (trans.right * -1), rayLength, ~mask))) {
+            onWall = false;
+        }
 
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;
