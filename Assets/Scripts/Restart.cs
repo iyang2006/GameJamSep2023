@@ -20,6 +20,12 @@ public class NewBehaviourScript : MonoBehaviour
             UnityEngine.SceneManagement.Scene activeScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(activeScene.name);
         }
+
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Debug.Log("Exiting Game");
+            Application.Quit();
+        }
     }
 
 
