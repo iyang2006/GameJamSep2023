@@ -6,8 +6,12 @@ public class box_controller : MonoBehaviour
 {
 
     [SerializeField] private Rigidbody body;
+    [SerializeField] private Transform trans;
     [SerializeField] private float poundIntensity;
+    [SerializeField] private float rayLength;
     private bool grounded;
+
+    private LayerMask mask = LayerMask.GetMask("boxes");
 
     void OnCollisionEnter(Collision col) {
         if ((col.gameObject.layer == LayerMask.NameToLayer("platforms")) || (col.gameObject.layer == LayerMask.NameToLayer("boxes"))) {
@@ -31,7 +35,9 @@ public class box_controller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+            grounded = true;
+        }       
     }
 
     public void Bomb(float intensity) {

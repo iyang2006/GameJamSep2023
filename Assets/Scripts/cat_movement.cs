@@ -15,7 +15,7 @@ public class cat_movement : MonoBehaviour
     private bool grounded;
     private int jumpCount;
     private bool onWall;
-    private bool leftWall;
+    public bool leftWall;
     [SerializeField] private float wallJumpStrength;
     private bool inJump;
     private float jumpTime;
@@ -60,9 +60,10 @@ public class cat_movement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-
-        Debug.Log("Lever Cat Velocity.x: " + body.velocity.x);
+    {   
+        if (Physics.Raycast(trans.position, (trans.up * -1), rayLength, ~mask)) {
+            grounded = true;
+        }     
 
         if (Time.time - jumpTime >= jumpTimeLimit) {
             jumpTime = 0;

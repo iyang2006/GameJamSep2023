@@ -147,4 +147,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 5976907549212929573}
+  trans: {fileID: 6217269232606929464}
   poundIntensity: 20
+  rayLength: 1.5
