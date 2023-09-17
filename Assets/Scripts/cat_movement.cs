@@ -15,7 +15,7 @@ public class cat_movement : MonoBehaviour
     private bool grounded;
     private int jumpCount;
     private bool onWall;
-    private bool leftWall;
+    public bool leftWall;
     [SerializeField] private float wallJumpStrength;
     private bool inJump;
     private float jumpTime;
